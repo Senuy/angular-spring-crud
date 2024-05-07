@@ -7,11 +7,17 @@ import { Course } from '../model/course';
 import { CoursesService } from './../services/courses.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+import { CategoryPipe } from '../../shared/pipes/category.pipe';
 
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [AppMaterialModule, NgIf, CommonModule],
+  imports: [
+    AppMaterialModule,
+    NgIf,
+    CommonModule,
+    CategoryPipe
+  ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss',
 })
