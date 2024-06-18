@@ -5,9 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.yunes.crudspring.enums.Category;
 import com.yunes.crudspring.model.Course;
+import com.yunes.crudspring.model.Lesson;
 import com.yunes.crudspring.repository.CourseRepository;
-
 
 @SpringBootApplication
 public class CrudSpringApplication {
@@ -22,7 +23,13 @@ public class CrudSpringApplication {
 
 			Course c = new Course();
 			c.setName("Angular com Spring");
-			c.setCategory("Front-End");
+			c.setCategory(Category.FRONT_END);
+			
+			Lesson l = new Lesson();
+			l.setName("Introdução");
+			l.setYoutubeUrl("https://www.youtube.com/watch?v=1");
+			l.setCourse(c);
+			c.getLessons().add(l);
 
 			courseRepository.save(c);
 		};

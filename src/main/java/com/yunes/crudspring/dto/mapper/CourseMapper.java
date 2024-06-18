@@ -3,6 +3,7 @@ package com.yunes.crudspring.dto.mapper;
 import org.springframework.stereotype.Component;
 
 import com.yunes.crudspring.dto.CourseDTO;
+import com.yunes.crudspring.enums.Category;
 import com.yunes.crudspring.model.Course;
 
 @Component
@@ -12,7 +13,7 @@ public class CourseMapper {
         if (course == null) {
             return null;
         }
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory());
+        return new CourseDTO(course.getId(), course.getName(),course.getCategory().getValue());
 
     }
 
@@ -27,8 +28,21 @@ public class CourseMapper {
             course.setId(courseDTO.id());
         }
         course.setName(courseDTO.name());
-        course.setCategory(courseDTO.category());
+        //TODO : use a mapper for Category
+        course.setCategory(convertCategoryValue(courseDTO.category()));
         return course;
+    }
+
+    public Category convertCategoryValue(String value) {
+        if (value == null){
+            return null;
+        }
+        return switch (value) {
+            case  "Front-End"-> Category.FRONT_END;
+            case  "Back-End" -> Category.BACK_END;
+            default -> throw new IllegalStateException("Categoria invalida: "+ value);
+        };
+
     }
 
 }
