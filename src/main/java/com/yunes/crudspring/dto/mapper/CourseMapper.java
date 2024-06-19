@@ -1,10 +1,16 @@
 package com.yunes.crudspring.dto.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
+
 import com.yunes.crudspring.dto.CourseDTO;
+import com.yunes.crudspring.dto.LessonDTO;
 import com.yunes.crudspring.enums.Category;
 import com.yunes.crudspring.model.Course;
+
 
 @Component
 public class CourseMapper {
@@ -13,8 +19,12 @@ public class CourseMapper {
         if (course == null) {
             return null;
         }
+        List<LessonDTO> lessons = course.getLessons()
+        .stream()
+        .map(lesson -> new  LessonDTO(lesson.getId(), lesson.getName(), lesson.getYoutubeUrl()))
+        .collect(Collectors.toList());
         return new CourseDTO(course.getId(), course.getName(),course.getCategory().getValue(),
-        course.getLessons());
+        lessons);
 
     }
 
@@ -29,7 +39,6 @@ public class CourseMapper {
             course.setId(courseDTO.id());
         }
         course.setName(courseDTO.name());
-        //TODO : use a mapper for Category
         course.setCategory(convertCategoryValue(courseDTO.category()));
         return course;
     }
