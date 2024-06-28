@@ -10,6 +10,7 @@ import com.yunes.crudspring.dto.CourseDTO;
 import com.yunes.crudspring.dto.LessonDTO;
 import com.yunes.crudspring.enums.Category;
 import com.yunes.crudspring.model.Course;
+import com.yunes.crudspring.model.Lesson;
 
 
 @Component
@@ -40,6 +41,16 @@ public class CourseMapper {
         }
         course.setName(courseDTO.name());
         course.setCategory(convertCategoryValue(courseDTO.category()));
+
+        List<Lesson> lessons = courseDTO.lessons().stream().map(lessonDTO ->{
+           var lesson = new Lesson();
+           lesson.setId(lessonDTO.id());
+           lesson.setName(lessonDTO.name());
+           lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
+           lesson.setCourse(course);
+           return lesson;
+    }).collect(Collectors.toList());
+        course.setLessons(lessons);
         return course;
     }
 
