@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UntypedFormArray, UntypedFormControl, UntypedFormGroup, FormGroup, FormArray } from '@angular/forms';
-import { find } from 'rxjs';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup,} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -32,12 +31,12 @@ export class FormUtilsService {
         return 'Campo Obrigatório';
       }
       if (field?.hasError('minlength')) {
-        const requiredLength = field.errors ? field.errors['requiredlength'] : 5;
+        const requiredLength: number = field.errors ? field.errors['minlength']['requiredLength'] : 5;
         return `Tamanho MÍNIMO precisa ser de ${requiredLength} caracteres`;
       }
 
       if (field?.hasError('maxlength')) {
-        const requiredLength = field.errors ? field.errors['requiredlength'] : 50;
+        const requiredLength:number = field.errors ? field.errors['maxlength']['requiredLength'] : 200;
         return `Tamanho MÁXIMO é de ${requiredLength} caracteres`;
       }
 
